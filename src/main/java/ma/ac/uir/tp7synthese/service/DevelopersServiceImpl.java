@@ -51,4 +51,8 @@ public class DevelopersServiceImpl implements DevelopersService {
     public void deleteById(int theId) {
         developersRepository.deleteById(theId);
     }
+
+    public Developers login(String username, String password) {
+        return developersRepository.login(username, password);
+    }
 }
