@@ -2,6 +2,7 @@ package ma.ac.uir.tp7synthese.service;
 
 import ma.ac.uir.tp7synthese.DAO.ProjectsRepository;
 import ma.ac.uir.tp7synthese.DAO.SkillsRepository;
+import ma.ac.uir.tp7synthese.entity.Developers;
 import ma.ac.uir.tp7synthese.entity.Projects;
 import ma.ac.uir.tp7synthese.entity.Skills;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +51,6 @@ public class SkillsServiceImpl implements SkillsService {
     @Override
     public void deleteById(int theId) {
         skillsRepository.deleteById(theId);
-}}
+}
+
+}

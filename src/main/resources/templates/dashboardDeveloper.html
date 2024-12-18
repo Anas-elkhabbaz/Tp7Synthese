@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Developer Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="navbar">
+    <ul>
+        <li><a href="/developers/dashboardDeveloper">Home</a></li>
+        <li><a href="/developers/projects">Projects</a></li>
+        <li><a href="/developers/skills">Skills</a></li>
+        <li><a href="/developers/profile">Profile</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h1>Welcome, <span th:text="${developer.name}"></span></h1>
+
+    <div class="section">
+        <h2>Assigned Projects</h2>
+        <ul>
+            <li th:each="project : ${assignedProjects}" th:text="${project.name}"></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Skills</h2>
+        <ul>
+            <li th:each="skill : ${skills}" th:text="${skill.name}"></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Personal Information</h2>
+        <p>Name: <span th:text="${developer.name}"></span></p>
+        <p>Email: <span th:text="${developer.email}"></span></p>
+    </div>
+</div>
+</body>
+</html>

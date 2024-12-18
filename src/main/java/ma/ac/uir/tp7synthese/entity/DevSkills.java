@@ -17,4 +17,39 @@ public class DevSkills {
     @ManyToOne
     @JoinColumn(name = "id_Skills", referencedColumnName = "id_Skills")
     private Skills skills;
+
+    public DevSkills(int id, Skills skills, Developers developers) {
+        this.id = id;
+        this.skills = skills;
+        this.developers = developers;
+    }
+    public DevSkills(Skills skills, Developers developers) {
+        this.skills = skills;
+        this.developers = developers;
+    }
+    public DevSkills() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Developers getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Developers developers) {
+        this.developers = developers;
+    }
+
+    public Skills getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Skills skills) {
+        this.skills = skills;
+    }
 }

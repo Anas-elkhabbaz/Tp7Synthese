@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Evaluations</title>
+</head>
+<body>
+
+<div class="dashboard">
+    <h1>Manager Dashboard</h1>
+    <ul>
+        <li><a href="/managers/projects">Manage Projects</a></li>
+        <li><a href="/managers/developers">Manage Developers</a></li>
+        <li><a href="/managers/skills">Manage Skills</a></li>
+        <li><a href="/managers/assignments">Manage Assignments</a></li>
+        <li><a href="/managers/evaluations">Manage Evaluations</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h2>Evaluate Developers</h2>
+    <form action="/manager/evaluations" method="post">
+        <label for="assignment">Select Assignment:</label>
+        <select name="assignmentId" id="assignment">
+            <option th:each="eval : ${evaluations}" th:value="${eval.id}" th:text="${eval.project.name} - ${eval.developer.name}"></option>
+        </select>
+
+        <label for="rating">Rating:</label>
+        <input type="number" name="rating" min="1" max="5" required>
+
+        <label for="score">Score:</label>
+        <input type="number" name="score" min="0" max="100" required>
+
+        <button type="submit">Evaluate</button>
+    </form>
+</div>
+
+</body>
+</html>

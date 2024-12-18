@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="navbar">
+    <ul>
+        <li><a href="/developers/dashboardDeveloper">Home</a></li>
+        <li><a href="/developers/projects">Projects</a></li>
+        <li><a href="/developers/skills">Skills</a></li>
+        <li><a href="/developers/profile">Profile</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h2>Personal Information</h2>
+    <p>Name: <span th:text="${developer.name}"></span></p>
+    <p>Email: <span th:text="${developer.email}"></span></p>
+
+    <!-- Optionally, you could add a form to update the profile -->
+    <form th:action="@{/dashboard/updateProfile}" method="post">
+        <input type="text" name="name" th:value="${developer.name}" placeholder="Update Name">
+        <input type="email" name="email" th:value="${developer.email}" placeholder="Update Email">
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+</body>
+</html>

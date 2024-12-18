@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <style>
+        /* Styles existants */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .role-selection {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function toggleRole(role) {
+            document.getElementById("developer-fields").classList.add("hidden");
+
+            if (role === "developer") {
+                document.getElementById("developer-fields").classList.remove("hidden");
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2>Create Account</h2>
+    <form th:action="@{/developers/register}" method="post">
+        <!-- Role Selection -->
+        <div class="role-selection">
+            <label>
+                <input type="radio" name="role" value="developer" onchange="toggleRole('developer')" required>
+                Developer
+            </label>
+            <label>
+                <input type="radio" name="role" value="manager" onchange="toggleRole('manager')" required>
+                Manager (Chef de Projet)
+            </label>
+        </div>
+
+        <!-- Shared Fields -->
+        <div th:object="${developer}"   class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" required>
+
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input type="text" id="login" th:field="*{login}" placeholder="Enter your login" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter your password" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" placeholder="Enter your email" required>
+        </div>
+        </div>
+        <!-- Developer Fields -->
+        <div id="developer-fields" class="hidden" th:object="${developer}">
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <select id="skills" th:field="*{skills}">
+                    <option value="" disabled selected>Select a skill</option>
+                    <option th:each="skill : ${skillsList}"
+                            th:value="${skill.id}"
+                            th:text="${skill.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience (years)</label>
+                <input type="number" id="experience" th:field="*{experience}" placeholder="Enter your experience">
+            </div>
+            <div class="form-group">
+                <label for="disponibility">Disponibility</label>
+                <select id="disponibility" th:field="*{disponibility}">
+                    <option value="true" th:selected="*{disponibility} eq true">Available</option>
+                    <option value="false" th:selected="*{disponibility} eq false" >Not Available</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <!-- Submit -->
+        <button type="submit">Create Account</button>
+    </form>
+</div>
+</body>
+</html>

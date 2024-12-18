@@ -1,5 +1,6 @@
 package ma.ac.uir.tp7synthese.service;
 
+import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.tp7synthese.DAO.DevelopersRepository;
 import ma.ac.uir.tp7synthese.DAO.ManagersRepository;
 import ma.ac.uir.tp7synthese.entity.Developers;
@@ -52,7 +53,23 @@ public class DevelopersServiceImpl implements DevelopersService {
         developersRepository.deleteById(theId);
     }
 
-    public Developers login(String username, String password) {
-        return developersRepository.login(username, password);
+    public Developers getLoggedInDeveloper(HttpSession session) {
+        // Récupérer l'ID du développeur depuis la session
+        Integer developerId = (Integer) session.getAttribute("developerId");
+
+        // Vérifier si l'ID existe et récupérer le développeur correspondant
+        if (developerId != null) {
+            return developersRepository.findById(developerId).orElse(null);
+        }
+        return null;
+    }
+
+    public Developers login(String username, String password,HttpSession session) {
+        Developers developer = developersRepository.login(username, password);
+
+        if (developer != null) {
+            session.setAttribute("developerId", developer.getId());  // Stocke l'ID du développeur dans la session
+        }
+        return developer;
     }
 }

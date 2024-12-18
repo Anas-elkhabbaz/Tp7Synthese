@@ -1,6 +1,7 @@
 package ma.ac.uir.tp7synthese.service;
 
 import ma.ac.uir.tp7synthese.DAO.ProjectsRepository;
+import ma.ac.uir.tp7synthese.entity.Developers;
 import ma.ac.uir.tp7synthese.entity.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class ProjectsServiceImpl implements ProjectsService {
-
+    @Autowired
     private ProjectsRepository projectsRepository;
 
     @Autowired
@@ -51,4 +52,6 @@ public class ProjectsServiceImpl implements ProjectsService {
     public void deleteById(int theId) {
        projectsRepository.deleteById(theId);
     }
+
+
 }

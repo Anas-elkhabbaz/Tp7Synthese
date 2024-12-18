@@ -105,7 +105,7 @@ public class Developers {
     public void setExperience(int experience) {
         this.experience = experience;
     }
-    public Boolean getDisposability() {
+    public Boolean getDisponibility() {
         return disponibility;
     }
 
@@ -118,8 +118,7 @@ public class Developers {
     }
 
 
-
-    public void setDisposability(Boolean disposability) {
-        this.disponibility = disposability;
+    public void getDisponibility(Boolean disponibility) {
+        this.disponibility = disponibility;
     }
 }
