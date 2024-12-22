@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SkillsRepository extends JpaRepository<Skills, Integer> {
 
+    Skills findByName(String name);
 }

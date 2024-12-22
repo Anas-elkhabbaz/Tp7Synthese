@@ -11,11 +11,11 @@ public class DevSkills {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id_Developer", referencedColumnName = "id_Developer")
+    @JoinColumn(name = "id_Developer", referencedColumnName = "id_Developer" ,nullable = false)
     private Developers developers;
 
     @ManyToOne
-    @JoinColumn(name = "id_Skills", referencedColumnName = "id_Skills")
+    @JoinColumn(name = "id_Skills", referencedColumnName = "id_Skills" ,nullable = false)
     private Skills skills;
 
     public DevSkills(int id, Skills skills, Developers developers) {

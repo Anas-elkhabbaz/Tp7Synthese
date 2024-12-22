@@ -9,4 +9,6 @@ public interface DevelopersRepository extends JpaRepository<Developers, Integer>
 
     @Query("SELECT d FROM Developers d WHERE d.login = :username AND d.password = :password")
     Developers login(@Param("username") String username, @Param("password") String password);
+
+    Developers findByEmail(String email);
 }

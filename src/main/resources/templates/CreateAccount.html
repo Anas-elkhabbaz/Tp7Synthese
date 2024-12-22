@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* Styles existants */
+        /* Custom styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #f8f9fa; /* Light grey */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,7 +23,7 @@
             padding: 20px 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            max-width: 500px;
         }
 
         h2 {
@@ -30,52 +32,11 @@
             color: #333;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .role-selection {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
         .hidden {
             display: none;
         }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
+
     <script>
         function toggleRole(role) {
             document.getElementById("developer-fields").classList.add("hidden");
@@ -87,69 +48,74 @@
     </script>
 </head>
 <body>
+
 <div class="container">
     <h2>Create Account</h2>
     <form th:action="@{/developers/register}" method="post">
         <!-- Role Selection -->
-        <div class="role-selection">
-            <label>
-                <input type="radio" name="role" value="developer" onchange="toggleRole('developer')" required>
-                Developer
-            </label>
-            <label>
-                <input type="radio" name="role" value="manager" onchange="toggleRole('manager')" required>
-                Manager (Chef de Projet)
-            </label>
+        <div class="mb-4">
+            <label class="form-label">Role</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" value="developer" id="developer" onchange="toggleRole('developer')" required>
+                <label class="form-check-label" for="developer">Developer</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" value="manager" id="manager" onchange="toggleRole('manager')" required>
+                <label class="form-check-label" for="manager">Manager (Chef de Projet)</label>
+            </div>
         </div>
 
         <!-- Shared Fields -->
-        <div th:object="${developer}"   class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" required>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+        </div>
 
-        <div class="form-group">
-            <label for="login">Login</label>
-            <input type="text" id="login" th:field="*{login}" placeholder="Enter your login" required>
+        <div class="mb-3">
+            <label for="login" class="form-label">Login</label>
+            <input type="text" class="form-control" id="login" name="login" placeholder="Enter your login" required>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" th:field="*{password}" placeholder="Enter your password" required>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
         </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" th:field="*{email}" placeholder="Enter your email" required>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
         </div>
-        </div>
+
         <!-- Developer Fields -->
-        <div id="developer-fields" class="hidden" th:object="${developer}">
-            <div class="form-group">
-                <label for="skills">Skills</label>
-                <select id="skills" th:field="*{skills}">
-                    <option value="" disabled selected>Select a skill</option>
-                    <option th:each="skill : ${skillsList}"
-                            th:value="${skill.id}"
-                            th:text="${skill.name}">
-                    </option>
+        <div id="developer-fields" class="hidden">
+            <div class="mb-3" th:object="${skills}">
+                <label for="skills" class="form-label">Skills</label>
+                <select id="skills" name="skillIds" class="form-select" multiple required>
+                    <option th:each="skill : ${skills}" th:value="${skill.getId()}" th:text="${skill.name}"></option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="experience">Experience (years)</label>
-                <input type="number" id="experience" th:field="*{experience}" placeholder="Enter your experience">
+
+            <div class="mb-3">
+                <label for="experience" class="form-label">Experience (years)</label>
+                <input type="number" class="form-control" id="experience" name="experience" placeholder="Enter your experience">
             </div>
-            <div class="form-group">
-                <label for="disponibility">Disponibility</label>
-                <select id="disponibility" th:field="*{disponibility}">
-                    <option value="true" th:selected="*{disponibility} eq true">Available</option>
-                    <option value="false" th:selected="*{disponibility} eq false" >Not Available</option>
+
+            <div class="mb-3">
+                <label for="disponibility" class="form-label">Disponibility</label>
+                <select id="disponibility" name="disponibility" class="form-select">
+                    <option value="true" th:selected="*{disponibility == true}">Available</option>
+                    <option value="false" th:selected="*{disponibility == false}">Not Available</option>
                 </select>
             </div>
         </div>
 
-
-
-        <!-- Submit -->
-        <button type="submit">Create Account</button>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Create Account</button>
     </form>
 </div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

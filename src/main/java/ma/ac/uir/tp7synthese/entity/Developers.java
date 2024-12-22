@@ -1,63 +1,64 @@
 package ma.ac.uir.tp7synthese.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="Developers")
+@Table(name = "Developers")
 public class Developers {
-    // define fields
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_Developer")
+    @Column(name = "id_Developer")
     private int id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="login")
+    @Column(name = "login")
     private String login;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "skills_id", referencedColumnName = "id_Skills")
-    private Skills skills;
+    @OneToMany(mappedBy = "developers")
+    private List<DevSkills> devSkills;
 
-    @Column(name="experience")
+    @Column(name = "experience")
     private int experience;
 
-    @Column(name="disponibility")
+    @Column(name = "disponibility")
     private Boolean disponibility;
 
+    // Constructors
     public Developers() {
-
     }
 
-    public Developers(String name, String login, String password, Skills skills, int experience, Boolean disponibility, String email) {
+    public Developers(String name, String login, String password, int experience, Boolean disponibility, String email,List<DevSkills> devSkills) {
         this.name = name;
         this.login = login;
         this.password = password;
-        this.skills = skills;
         this.experience = experience;
         this.disponibility = disponibility;
         this.email = email;
+        this.devSkills = devSkills;
     }
 
-    public Developers(int id, String name, String login, String password, Skills skills, int experience, Boolean disponibility, String email) {
+    public Developers(int id, String name, String login, String password, int experience, Boolean disponibility, String email,List<DevSkills> devSkills) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
-        this.skills = skills;
         this.experience = experience;
         this.disponibility = disponibility;
         this.email = email;
+        this.devSkills = devSkills;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -78,8 +79,8 @@ public class Developers {
         return name;
     }
 
-    public void setName(String firstName) {
-        this.name = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -90,12 +91,12 @@ public class Developers {
         this.password = password;
     }
 
-    public Skills getSkills() {
-        return skills;
+    public List<DevSkills> getDevSkills() {
+        return devSkills;
     }
 
-    public void setSkills(Skills skills) {
-        this.skills = skills;
+    public void setDevSkills(List<DevSkills> devSkills) {
+        this.devSkills = devSkills;
     }
 
     public int getExperience() {
@@ -105,8 +106,13 @@ public class Developers {
     public void setExperience(int experience) {
         this.experience = experience;
     }
+
     public Boolean getDisponibility() {
         return disponibility;
+    }
+
+    public void setDisponibility(Boolean disponibility) {
+        this.disponibility = disponibility;
     }
 
     public String getEmail() {
@@ -115,10 +121,5 @@ public class Developers {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-
-    public void getDisponibility(Boolean disponibility) {
-        this.disponibility = disponibility;
     }
 }

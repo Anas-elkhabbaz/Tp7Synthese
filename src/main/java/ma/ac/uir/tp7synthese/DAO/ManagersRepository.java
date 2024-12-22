@@ -10,4 +10,9 @@ public interface ManagersRepository extends JpaRepository<Managers, Integer> {
 
     @Query("SELECT d FROM Managers d WHERE d.login = :username AND d.password = :password")
     Managers login(@Param("username") String username, @Param("password") String password);
+
+    Managers findByEmail(String email);
+
+
+
 }

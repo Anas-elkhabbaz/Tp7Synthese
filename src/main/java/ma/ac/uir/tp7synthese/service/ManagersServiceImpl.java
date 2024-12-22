@@ -40,10 +40,10 @@ public class ManagersServiceImpl implements ManagersService {
         return theManagers;
     }
 
-    @Override
-    public Managers save(Managers theManager) {
-        return managersRepository.save(theManager);
-    }
+    //@Override
+   // public Managers save(Managers theManager) {
+    //    return managersRepository.save(theManager);
+    //}
 
     @Override
     public Managers update(Managers theManager) {
@@ -75,4 +75,17 @@ public class ManagersServiceImpl implements ManagersService {
         return managers;
 
     }
+
+    public void save(Managers manager) {
+        if (manager != null) {
+            managersRepository.save(manager);
+        } else {
+            throw new IllegalArgumentException("Manager object is null");
+        }
+    }
+
+    public Managers findByEmail(String email) {
+        return managersRepository.findByEmail(email);
+    }
+
 }

@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Assignements</title>
+  <meta charset="UTF-8">
+  <title>Assignments</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light text-dark">
 
-<div class="dashboard">
-  <h1>Manager Dashboard</h1>
-  <ul>
-    <li><a href="/managers/projects">Manage Projects</a></li>
-    <li><a href="/managers/developers">Manage Developers</a></li>
-    <li><a href="/managers/skills">Manage Skills</a></li>
-    <li><a href="/managers/assignments">Manage Assignments</a></li>
-    <li><a href="/managers/evaluations">Manage Evaluations</a></li>
-  </ul>
-</div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;"> <!-- Bleu marine -->
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="#">Manager</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/managers/projects">Manage Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/managers/developers">Manage Developers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/managers/skills">Manage Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/managers/assignments">Manage Assignments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/managers/evaluations">Manage Evaluations</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<div class="content">
+<!-- Content -->
+<div class="container mt-5 bg-white p-4 rounded shadow">
   <h2>Assign Developers to Projects</h2>
-  <form action="/manager/assignments" method="post">
-    <label for="project">Select Project:</label>
-    <select name="projectId" id="project">
-      <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}"></option>
-    </select>
+  <form action="/managers/assignments" method="post" th:object="${projects}">
+    <div class="mb-3">
+      <label for="project" class="form-label">Select Project:</label>
+      <select name="projectId" id="project" class="form-select">
+        <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.title}"></option>
+      </select>
+    </div>
 
-    <label for="developer">Select Developer:</label>
-    <select name="developerId" id="developer">
-      <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
-    </select>
+    <div class="mb-3">
+      <label for="developer" class="form-label">Select Developer:</label>
+      <select name="developerId" id="developer" class="form-select">
+        <option th:each="developer : ${developers}" th:value="${developer.getId()}" th:text="${developer.getName()}"></option>
+      </select>
+    </div>
 
-    <button type="submit">Assign</button>
+    <button type="submit" class="btn btn-primary">Assign Developer to Project</button>
   </form>
 </div>
 
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

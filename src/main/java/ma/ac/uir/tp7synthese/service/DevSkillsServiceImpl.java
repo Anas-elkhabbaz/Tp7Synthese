@@ -60,4 +60,7 @@ public class DevSkillsServiceImpl implements DevSkillsService{
                 .map(DevSkills::getSkills) // Extract skills from each DevSkills
                 .collect(Collectors.toList());
     }
+    public void deleteDevSkillsByDeveloperId(int developerId) {
+        devSkillsRepository.deleteById(developerId);
+    }
 }

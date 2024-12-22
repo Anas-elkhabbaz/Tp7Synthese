@@ -2,6 +2,7 @@ package ma.ac.uir.tp7synthese.service;
 
 import ma.ac.uir.tp7synthese.DAO.ProjectsRepository;
 import ma.ac.uir.tp7synthese.entity.Developers;
+import ma.ac.uir.tp7synthese.entity.Managers;
 import ma.ac.uir.tp7synthese.entity.Projects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,11 @@ public class ProjectsServiceImpl implements ProjectsService {
     public void deleteById(int theId) {
        projectsRepository.deleteById(theId);
     }
+
+    public List<Projects> findProjectsByManager(Managers manager) {
+        return projectsRepository.findByManagers(manager);
+    }
+
 
 
 }

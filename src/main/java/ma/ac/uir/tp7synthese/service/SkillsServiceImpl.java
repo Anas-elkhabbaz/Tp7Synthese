@@ -51,6 +51,9 @@ public class SkillsServiceImpl implements SkillsService {
     @Override
     public void deleteById(int theId) {
         skillsRepository.deleteById(theId);
-}
+    }
+    public Skills findByName(String name) {
+        return skillsRepository.findByName(name);
+    }
 
 }

@@ -87,4 +87,12 @@ public class Projects {
     public void setRequired_skills(String required_skills) {
         this.required_skills = required_skills;
     }
+
+    public Managers getManagers() {
+        return managers;
+    }
+
+    public void setManagers(Managers managers) {
+        this.managers = managers;
+    }
 }

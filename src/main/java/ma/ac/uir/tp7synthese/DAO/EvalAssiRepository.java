@@ -11,4 +11,7 @@ public interface EvalAssiRepository extends JpaRepository<EvalAssi, Integer> {
 
     List<EvalAssi> findByDevelopers(Developers developer);
 
+    List<EvalAssi> findByProjects(Projects project);
+
+
 }

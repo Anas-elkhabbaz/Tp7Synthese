@@ -9,7 +9,7 @@ public interface ManagersService {
 
     Managers findById(int theId);
 
-    Managers save(Managers theManager);
+    public void save(Managers manager);
 
     Managers update(Managers theManager);
 

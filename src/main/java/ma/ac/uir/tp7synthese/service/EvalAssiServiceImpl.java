@@ -1,6 +1,7 @@
 package ma.ac.uir.tp7synthese.service;
 
 import ma.ac.uir.tp7synthese.DAO.EvalAssiRepository;
+import ma.ac.uir.tp7synthese.DAO.ProjectsRepository;
 import ma.ac.uir.tp7synthese.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,29 @@ import java.util.stream.Collectors;
 
 @Service
 public class EvalAssiServiceImpl implements EvalAssiService {
+    private final DevelopersService developersService;
     private EvalAssiRepository evalAssiRepository;
+    private ProjectsService projectsService;
 
     @Autowired
-    public EvalAssiServiceImpl(EvalAssiRepository theEvalAssiRepository) {
+    public EvalAssiServiceImpl(EvalAssiRepository theEvalAssiRepository, DevelopersService developersService,
+                               ProjectsService projectsService) {
         this.evalAssiRepository = theEvalAssiRepository;
+        this.developersService = developersService;
+        this.projectsService = projectsService;
     }
 
-    public static void evaluateAssignment(int assignmentId, int rating, int score) {
-
+    public void evaluateAssignment(int assignmentId, int rating, String feedback) {
+        // Logique de mise à jour dans la base de données
+        Optional<EvalAssi> assignmentOptional = evalAssiRepository.findById(assignmentId);
+        if (assignmentOptional.isPresent()) {
+            EvalAssi assignment = assignmentOptional.get();
+            assignment.setRating(rating);
+            assignment.setFeedback(feedback);
+            evalAssiRepository.save(assignment);
+        }
     }
+
 
     @Override
     public List<EvalAssi> findAll() {
@@ -64,7 +78,26 @@ public class EvalAssiServiceImpl implements EvalAssiService {
                 .collect(Collectors.toList());
     }
 
-    public void assignDeveloperToProject(int developerId, int projectId) {
-
+    public List<EvalAssi> findAssignedProject(Developers developer) {
+        List<EvalAssi> devProjectsListe = evalAssiRepository.findByDevelopers(developer);
+        return devProjectsListe;
     }
+
+    public void assignDeveloperToProject(int developerId, int projectId) {
+        // Récupérer le développeur et le projet depuis leurs services
+        Developers developer = developersService.findById(developerId);
+        Projects project = projectsService.findById(projectId);
+
+
+        // Créer une nouvelle évaluation d'affectation
+        EvalAssi evalAssi = new EvalAssi();
+        evalAssi.setDevelopers(developer);
+        evalAssi.setProjects(project);
+        //evalAssi.setRating(rating);
+        //evalAssi.setFeedback(feedback);
+
+        // Sauvegarder l'affectation dans la base de données
+        evalAssiRepository.save(evalAssi);  // Assurez-vous que evalAssiService.save() est correctement défini dans le service
+    }
+
 }

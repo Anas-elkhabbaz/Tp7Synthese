@@ -3,6 +3,7 @@ package ma.ac.uir.tp7synthese.service;
 import jakarta.servlet.http.HttpSession;
 import ma.ac.uir.tp7synthese.DAO.DevelopersRepository;
 import ma.ac.uir.tp7synthese.DAO.ManagersRepository;
+import ma.ac.uir.tp7synthese.entity.DevSkills;
 import ma.ac.uir.tp7synthese.entity.Developers;
 import ma.ac.uir.tp7synthese.entity.Managers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,8 @@ public class DevelopersServiceImpl implements DevelopersService {
         return developersRepository.save(theDeveloper);
     }
 
+
+
     @Override
     public Developers update(Developers theDeveloper) {
         return developersRepository.save(theDeveloper);
@@ -72,4 +75,10 @@ public class DevelopersServiceImpl implements DevelopersService {
         }
         return developer;
     }
+
+    public Developers findByEmail(String email) {
+        return developersRepository.findByEmail(email);
+    }
+
+
 }
